@@ -5,27 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlowWare - Asistente de Configuración</title>
-    <!-- <link rel="stylesheet" href="./styles/components.css"> Eliminado -->
-    <!-- <link rel="stylesheet" href="./styles/nodes.css"> Eliminado -->
-    <link rel="stylesheet" href="./styles/main.css"> <!-- Contendrá estilos globales y del app-header -->
+    <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./styles/wizard.css">
 </head>
 
 <body>
     <div class="app">
-        <header class="app-header">
-            <h1 class="logo">
-                <span class="logo-icon">⚡</span>
-                FlowWare
-            </h1>
-            <button id="show-wizard-btn" class="btn btn-accent">
-                <span>✨</span> Configuración Inicial
-            </button>
-        </header>
+        <!-- El header global ha sido eliminado -->
 
         <div class="initial-config-message-container" id="initial-config-message" style="display: none;">
             <h2>Configuración Inicial Completada</h2>
-            <p>La configuración básica del sistema ha sido guardada. Puede revisarla o modificarla en cualquier momento haciendo clic en el botón de 'Configuración Inicial' en la parte superior.</p>
+            <p>La configuración básica del sistema ha sido guardada.</p>
+            <button id="reopen-wizard-btn" class="btn btn-primary" style="margin-top: 20px;">
+                <span>✏️</span> Revisar o Reiniciar Configuración
+            </button>
         </div>
 
         <!-- El .app-content-wrapper, .sidebar, .workspace han sido eliminados -->
@@ -33,12 +26,12 @@
 
     </div> <!-- Fin div.app -->
 
-    <!-- Wizard Modal (estructura no cambia, solo su contenido y la forma en que se muestra) -->
+    <!-- Wizard Modal -->
     <div id="config-wizard" class="modal-overlay" style="display: none;">
         <div class="modal-content" style="max-width: 700px; width: 90%;">
             <div class="modal-header">
                 <h2>Asistente de Configuración Inicial</h2>
-                <button id="close-wizard-btn" class="modal-close-btn">&times;</button>
+                <button id="close-wizard-btn" class="modal-close-btn">&times;</button> <!-- Botón para cerrar el wizard -->
             </div>
             <div class="wizard-steps">
                 <div class="wizard-step active" data-step="1">
