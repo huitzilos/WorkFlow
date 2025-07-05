@@ -460,24 +460,28 @@ class FlowWareApp {
         console.log('🧹 Destruyendo FlowWare...');
 
         // Deshabilitar auto-guardado
-        WorkflowManager.disableAutoSave();
+        // WorkflowManager.disableAutoSave(); // WorkflowManager podría no estar relevante si no hay workflows de canvas
 
-        // Destruir managers
+        // Destruir managers (los que queden, ej. WizardManager si tuviera un destroy)
         Object.values(this.managers).forEach(manager => {
             if (manager && typeof manager.destroy === 'function') {
                 manager.destroy();
             }
         });
+         if (window.FlowWare && window.FlowWare.WizardManager && typeof window.FlowWare.WizardManager.destroy === 'function') {
+            // window.FlowWare.WizardManager.destroy(); // Si WizardManager tuviera un método destroy
+        }
+
 
         // Limpiar event listeners
         window.removeEventListener('beforeunload', this.handleBeforeUnload);
         window.removeEventListener('resize', this.handleResize);
         document.removeEventListener('visibilitychange', this.handleVisibilityChange);
 
-        // Limpiar EventBus
-        if (window.FlowWare && window.FlowWare.EventBus) {
-            window.FlowWare.EventBus.clear();
-        }
+        // Limpiar EventBus (si aún se usa para algo)
+        // if (window.FlowWare && window.FlowWare.EventBus) {
+        //     window.FlowWare.EventBus.clear();
+        // }
 
         // Limpiar estado
         this.managers = {};
@@ -485,9 +489,6 @@ class FlowWareApp {
 
         console.log('✅ FlowWare destruido correctamente');
     }
-}
-
-// ===== INICIALIZACIÓN =====
 
     handleInitialDisplay() {
         const wizardCompleted = window.FlowWare.Utils.State.load('flowWareConfig.wizardCompleted');
