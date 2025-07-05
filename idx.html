@@ -317,14 +317,38 @@
             </div>
             <div class="config-content">
                 <div class="form-group">
-                    <label>Nombre del nodo</label>
+                    <label for="node-name">Nombre del nodo</label>
                     <input type="text" id="node-name" class="form-input" placeholder="Ingresa un nombre">
                 </div>
                 <div class="form-group">
-                    <label>Descripción</label>
+                    <label for="node-description">Descripción</label>
                     <textarea id="node-description" class="form-input" rows="3"
                         placeholder="Describe la función"></textarea>
                 </div>
+
+                <!-- Sección específica para "Generar Etiquetas" -->
+                <div id="config-etiquetar-specific" class="config-specific-section" style="display: none;">
+                    <hr>
+                    <h4>Configuración de Etiquetas</h4>
+                    <div class="form-group">
+                        <label for="node-etiqueta-tipo">Tipo de Etiqueta</label>
+                        <select id="node-etiqueta-tipo" class="form-input">
+                            <option value="codigo_barras">Código de Barras</option>
+                            <option value="qr">Código QR</option>
+                            <option value="rfid">RFID</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="node-etiqueta-trazabilidad">Nivel de Trazabilidad</label>
+                        <select id="node-etiqueta-trazabilidad" class="form-input">
+                            <option value="pallet">Pallet</option>
+                            <option value="caja">Pallet → Caja</option>
+                            <option value="subpaquete">Pallet → Caja → Subpaquete</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Fin Sección específica para "Generar Etiquetas" -->
+
             </div>
         </aside>
     </div>
