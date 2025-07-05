@@ -78,15 +78,40 @@ body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
+    overflow: hidden; /* Evitar scroll en el body si el wizard es más grande */
 }
 
 /* ===== LAYOUT PRINCIPAL ===== */
 .app {
     display: flex;
-    flex-direction: column; /* Cambiado para permitir el mensaje de config completada arriba */
+    flex-direction: column;
     height: 100vh;
     background-color: var(--white);
+}
+
+.app-header {
+    padding: 10px 20px;
+    background-color: var(--gray-100); /* Ligeramente diferente para destacar */
+    border-bottom: 1px solid var(--gray-300); /* Borde más notorio */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos como el wizard overlay */
+    box-shadow: var(--shadow-sm);
+}
+
+.app-header .logo {
+    font-size: 1.5em;
+    margin: 0;
+    color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+}
+
+.app-header .logo-icon {
+    font-size: 1.5em; /* Ajustar si es necesario */
+    margin-right: var(--space-2);
+    color: var(--accent-orange);
 }
 
 /* Contenedor para el mensaje principal cuando el wizard está completo y el workspace oculto */
@@ -95,9 +120,10 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Ocupa toda la altura si es el único contenido */
+    flex-grow: 1; /* Para que ocupe el espacio restante bajo el app-header */
     text-align: center;
     padding: var(--space-8);
+    background-color: var(--gray-50); /* Un fondo suave */
 }
 
 .initial-config-message-container h2 {
@@ -110,308 +136,77 @@ body {
     font-size: var(--font-lg);
     color: var(--gray-700);
     margin-bottom: var(--space-6);
+    max-width: 600px; /* Para mejor legibilidad */
 }
 
-
-/* Por defecto, ocultar sidebar y workspace si no se requiere el wizard */
-.sidebar,
-.workspace {
-    display: none;
-}
-
-/* Clase para mostrar los elementos cuando sea necesario (después del wizard) */
-.app-active .sidebar {
-    width: 280px;
-    background-color: var(--gray-50);
-    border-right: 1px solid var(--gray-200);
-    display: flex; /* Mostrar cuando .app-active está presente en .app */
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 100;
-    height: 100vh; /* Asegurar que ocupe la altura si .app es flex row */
-}
-
-.app-active .workspace {
-    flex: 1;
-    display: flex; /* Mostrar cuando .app-active está presente en .app */
-    flex-direction: column;
-    background-color: var(--white);
-    position: relative;
-    height: 100vh; /* Asegurar que ocupe la altura si .app es flex row */
-}
-
-/* Si .app es flex direction row y app-active, el contenedor del app debe ser row */
-.app.app-active {
-    flex-direction: row;
-}
-
-
-.sidebar-header {
-    padding: var(--space-6);
-    border-bottom: 1px solid var(--gray-200);
-    background-color: var(--white);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    font-size: var(--font-2xl);
-    font-weight: 700;
-    color: var(--primary-blue);
-    margin: 0;
-}
-
-.logo-icon {
-    color: var(--accent-orange);
-    font-size: var(--font-3xl);
-}
-
-/* ===== WORKSPACE ===== */
-.workspace {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--white);
-    position: relative;
-}
-
-.workspace-header {
-    background-color: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    padding: var(--space-4) var(--space-6);
-    z-index: 50;
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-}
-
-.workspace-title {
-    font-size: var(--font-2xl);
-    font-weight: 600;
-    color: var(--primary-blue);
-    margin: 0;
-}
-
-.workspace-subtitle {
-    color: var(--gray-600);
-    font-size: var(--font-sm);
-    margin: 0;
-}
-
-.header-actions {
-    display: flex;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-}
-
-@media (max-width: 1200px) {
-    .header-content {
-        flex-direction: column;
-        gap: var(--space-4);
-        align-items: flex-start;
-    }
-
-    .header-actions {
-        width: 100%;
-        justify-content: flex-start;
-    }
-}
-
-/* ===== CANVAS ===== */
-.canvas-container {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    background-color: var(--white);
-}
-
-.canvas {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    cursor: grab;
-    background-image:
-        radial-gradient(circle at 1px 1px, var(--gray-200) 1px, transparent 1px);
-    background-size: 20px 20px;
-}
-
-.canvas:active {
-    cursor: grabbing;
-}
-
-.connections-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* ===== EMPTY STATE ===== */
-.empty-state {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    pointer-events: none;
-    z-index: 2;
-}
-
-.empty-icon {
-    font-size: 4rem;
-    margin-bottom: var(--space-4);
-    opacity: 0.3;
-}
-
-.empty-state h3 {
-    font-size: var(--font-xl);
-    color: var(--gray-600);
-    margin-bottom: var(--space-2);
-}
-
-.empty-state p {
-    color: var(--gray-500);
-    font-size: var(--font-sm);
-}
-
-/* ===== FOOTER ===== */
-.workspace-footer {
-    background-color: var(--white);
-    border-top: 1px solid var(--gray-200);
-    padding: var(--space-3) var(--space-6);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 50;
-}
-
-.footer-stats {
-    display: flex;
-    gap: var(--space-4);
-    color: var(--gray-600);
-    font-size: var(--font-sm);
-}
-
-.zoom-controls {
-    display: flex;
-    gap: var(--space-1);
-}
-
-.zoom-btn {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--gray-300);
-    background-color: var(--white);
+/* Estilos para botones globales (si no están en components.css o wizard.css) */
+.btn {
+    padding: var(--space-2) var(--space-4);
     border-radius: var(--radius);
+    border: 1px solid transparent;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gray-600);
-    font-size: var(--font-sm);
     font-weight: 500;
     transition: var(--transition);
-}
-
-.zoom-btn:hover {
-    background-color: var(--gray-50);
-    border-color: var(--gray-400);
-    color: var(--gray-800);
-}
-
-.zoom-btn:active {
-    transform: scale(0.95);
-}
-
-/* ===== CONFIG PANEL ===== */
-.config-panel {
-    position: absolute;
-    top: var(--space-6);
-    right: var(--space-6);
-    width: 300px;
-    background-color: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xl);
-    z-index: 200;
-    transform: translateX(320px);
-    transition: transform 0.3s ease;
-}
-
-.config-panel.active {
-    transform: translateX(0);
-}
-
-.config-header {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
     align-items: center;
-    padding: var(--space-4) var(--space-5);
-    border-bottom: 1px solid var(--gray-200);
+    gap: var(--space-2);
+    font-size: var(--font-sm);
 }
 
-.config-header h3 {
-    font-size: var(--font-lg);
-    font-weight: 600;
-    color: var(--primary-blue);
-    margin: 0;
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: var(--white);
+}
+.btn-primary:hover {
+    background-color: var(--secondary-blue);
 }
 
-.config-close {
-    width: 24px;
-    height: 24px;
-    border: none;
-    background: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gray-500);
-    font-size: var(--font-lg);
-    border-radius: var(--radius);
-    transition: var(--transition);
-}
-
-.config-close:hover {
-    background-color: var(--gray-100);
+.btn-secondary {
+    background-color: var(--gray-200);
     color: var(--gray-700);
+    border-color: var(--gray-300);
+}
+.btn-secondary:hover {
+    background-color: var(--gray-300);
 }
 
-.config-content {
-    padding: var(--space-5);
+.btn-accent {
+    background-color: var(--accent-orange);
+    color: var(--white);
+}
+.btn-accent:hover {
+    background-color: var(--accent-orange-light);
 }
 
-/* ===== RESPONSIVE ===== */
+.btn-sm {
+    padding: var(--space-1) var(--space-2);
+    font-size: calc(var(--font-sm) * 0.9);
+}
+
+
+/* NOTA: Todos los estilos relacionados con .sidebar, .workspace, .canvas-container,
+   .node-palette, .node-item, .config-panel (el del canvas), etc.,
+   han sido eliminados ya que esos elementos HTML ya no existen.
+   Solo se conservan los estilos globales, del .app, .app-header,
+   y el .initial-config-message-container.
+   Los estilos del wizard están en wizard.css.
+*/
+
+/* ===== RESPONSIVE (Simplificado) ===== */
 @media (max-width: 768px) {
-    .sidebar {
-        width: 240px;
+    .app-header {
+        padding: var(--space-2) var(--space-3);
     }
-
-    .workspace-header {
-        padding: var(--space-3) var(--space-4);
+    .app-header .logo {
+        font-size: 1.2em;
     }
-
-    .header-content {
-        flex-direction: column;
-        gap: var(--space-3);
-        align-items: flex-start;
+    .app-header .logo-icon {
+        font-size: 1.2em;
     }
-
-    .config-panel {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        max-width: 350px;
-        border-radius: 0;
-        transform: translateX(100%);
-    } }
+    .initial-config-message-container h2 {
+        font-size: var(--font-xl);
+    }
+    .initial-config-message-container p {
+        font-size: var(--font-base);
+    }
+}
