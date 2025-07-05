@@ -1,40 +1,6 @@
 // ===== CONFIGURACIÓN GLOBAL =====
 window.FlowWare = {
-    // Configuración del canvas
-    CANVAS: {
-        ZOOM_MIN: 0.3,
-        ZOOM_MAX: 2.5,
-        ZOOM_STEP: 0.1,
-        GRID_SIZE: 20,
-        PAN_SPEED: 1
-    },
-
-    // Configuración de nodos
-    NODES: {
-        WIDTH: 180,
-        HEIGHT: 100,
-        MIN_HEIGHT: 80,
-        SNAP_THRESHOLD: 10
-    },
-
-    // Configuración de conexiones
-    CONNECTIONS: {
-        CURVE_STRENGTH: 0.5,
-        STROKE_WIDTH: 2.5,
-        HOVER_WIDTH: 3.5,
-        TEMP_DASH: '6,4'
-    },
-
-    // Configuración de puertos
-    PORTS: {
-        SIZE: 16,
-        HOVER_SCALE: 1.3,
-        CONNECTING_SCALE: 1.4,
-        TARGET_SCALE: 1.5,
-        HIT_AREA: 24
-    },
-
-    // Tipos de nodos disponibles
+    // Tipos de nodos disponibles (usados por el Wizard para las paletas de workflow)
     NODE_TYPES: {
         trigger: {
             color: '#ff9d00',
@@ -85,20 +51,18 @@ window.FlowWare = {
         }
     },
 
-    // Eventos personalizados
+    // Eventos personalizados (se pueden mantener si el wizard los usa, o simplificar/eliminar)
+    // Por ahora, se dejan por si alguna notificación o lógica futura los necesita.
+    // Si no, se pueden eliminar para mayor limpieza.
     EVENTS: {
-        NODE_CREATED: 'nodeCreated',
-        NODE_SELECTED: 'nodeSelected',
-        NODE_DESELECTED: 'nodeDeselected',
-        NODE_MOVED: 'nodeMoved',
-        NODE_DELETED: 'nodeDeleted',
-        CONNECTION_CREATED: 'connectionCreated',
-        CONNECTION_DELETED: 'connectionDeleted',
-        CANVAS_ZOOMED: 'canvasZoomed',
-        CANVAS_PANNED: 'canvasPanned'
+        // Eventos del wizard podrían ir aquí si es necesario
+        WIZARD_STEP_CHANGED: 'wizardStepChanged',
+        WIZARD_COMPLETED: 'wizardCompleted',
+        // Mantener algunos genéricos por si acaso
+        CONFIG_UPDATED: 'configUpdated'
     },
 
-    // Configuración de animaciones
+    // Configuración de animaciones (puede ser útil para transiciones en el wizard)
     ANIMATIONS: {
         DURATION_FAST: 200,
         DURATION_NORMAL: 300,
@@ -116,29 +80,9 @@ window.FlowWare = {
 
 // ===== ESTADO GLOBAL =====
 window.FlowWare.State = {
-    // Managers
-    canvas: null,
-    nodes: null,
-    connections: null,
-
-    // Estado del canvas
-    zoom: 1,
-    panX: 0,
-    panY: 0,
-
-    // Estado de interacción
-    isDragging: false,
-    isConnecting: false,
-    isPanning: false,
-
-    // Selección actual
-    selectedNode: null,
-
-    // Datos
-    nodeList: [],
-    connectionList: [],
-
-    // Performance
-    animationFrame: null,
-    updateQueue: []
+    // El estado global ahora se manejará principalmente a través de localStorage
+    // y las propiedades internas del WizardManager.
+    // Se puede mantener este objeto window.FlowWare.State si alguna utilidad general
+    // o el NotificationManager lo esperan, pero su contenido específico del canvas se ha ido.
+    wizardDataLoaded: false // Ejemplo de un estado global que podría ser útil
   };
