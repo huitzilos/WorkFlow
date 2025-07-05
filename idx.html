@@ -13,8 +13,26 @@
 
 <body>
     <div class="app">
-        <!-- Sidebar con paleta de nodos -->
-        <aside class="sidebar">
+        <header class="app-header" style="padding: 10px 20px; background-color: #f0f0f0; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
+            <h1 class="logo" style="font-size: 1.5em; margin:0;"> <!-- Logo reducido -->
+                <span class="logo-icon" style="font-size: 1.5em;">⚡</span>
+                FlowWare
+            </h1>
+            <button id="show-wizard-btn" class="btn btn-accent">
+                <span>✨</span> Configuración Inicial
+            </button>
+        </header>
+
+        <!-- Mensaje de Configuración Completada (inicialmente oculto) -->
+        <div class="initial-config-message-container" id="initial-config-message">
+            <h2>Configuración Inicial Completada</h2>
+            <p>La configuración básica del sistema ha sido guardada. Puede revisarla o modificarla en cualquier momento haciendo clic en el botón de 'Configuración Inicial' en la parte superior.</p>
+        </div>
+
+        <!-- Contenedor para el sidebar y el workspace, se mostrará si app está active -->
+        <div class="app-content-wrapper" style="display: flex; flex-grow: 1; height: calc(100vh - 57px); /* Altura del app-header */">
+            <!-- Sidebar con paleta de nodos -->
+            <aside class="sidebar">
             <div class="sidebar-header">
                 <h1 class="logo">
                     <span class="logo-icon">⚡</span>
@@ -278,9 +296,7 @@
                         <button class="btn btn-primary" onclick="WorkflowManager.save()">
                             <span>💾</span> Guardar
                         </button>
-                        <button id="show-wizard-btn" class="btn btn-accent" style="margin-left: 10px;">
-                            <span>✨</span> Configuración Inicial
-                        </button>
+                        <!-- El botón show-wizard-btn se ha movido al app-header global -->
                     </div>
                 </div>
             </header>
