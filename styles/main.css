@@ -87,43 +87,22 @@ body {
     flex-direction: column;
     height: 100vh;
     background-color: var(--white);
+    /* overflow-y: auto; Permitir scroll en .app si el wizard es muy largo y no tiene su propio scroll */
 }
 
-.app-header {
-    padding: 10px 20px;
-    background-color: var(--gray-100); /* Ligeramente diferente para destacar */
-    border-bottom: 1px solid var(--gray-300); /* Borde más notorio */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000; /* Asegurar que esté por encima de otros elementos como el wizard overlay */
-    box-shadow: var(--shadow-sm);
-}
+/* Ya no hay app-header global */
 
-.app-header .logo {
-    font-size: 1.5em;
-    margin: 0;
-    color: var(--primary-blue);
-    display: flex;
-    align-items: center;
-}
-
-.app-header .logo-icon {
-    font-size: 1.5em; /* Ajustar si es necesario */
-    margin-right: var(--space-2);
-    color: var(--accent-orange);
-}
-
-/* Contenedor para el mensaje principal cuando el wizard está completo y el workspace oculto */
+/* Contenedor para el mensaje principal cuando el wizard está completo */
 .initial-config-message-container {
-    display: none; /* Oculto por defecto, se muestra con JS */
+    display: none; /* Oculto por defecto, JS lo mostrará */
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1; /* Para que ocupe el espacio restante bajo el app-header */
+    flex-grow: 1;
     text-align: center;
     padding: var(--space-8);
-    background-color: var(--gray-50); /* Un fondo suave */
+    background-color: var(--gray-50);
+    min-height: 300px; /* Asegurar que tenga algo de altura para ser visible */
 }
 
 .initial-config-message-container h2 {

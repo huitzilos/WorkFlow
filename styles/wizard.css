@@ -1,39 +1,29 @@
 /* styles/wizard.css */
 
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1050; /* Encima de otros elementos como el panel de config */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-content {
-    background-color: #fff;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 700px;
-    max-height: 90vh;
-    display: flex;
+/* Ya no es un modal overlay, sino el contenedor principal del wizard */
+#config-wizard {
+    display: none; /* Oculto por defecto, JS lo mostrará */
     flex-direction: column;
+    width: 100%;
+    max-width: 900px; /* Un ancho máximo para el contenido del wizard */
+    margin: 20px auto; /* Centrar y dar espacio arriba/abajo */
+    padding: 20px;
+    background-color: var(--white, #fff);
+    border: 1px solid var(--gray-300, #ccc);
+    border-radius: var(--radius-lg, 8px);
+    box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0,0,0,0.1));
+    /* height: calc(100vh - 100px); /* Ajustar altura si es necesario, menos el espacio para header/footer si los hubiera */
+    /* overflow-y: auto; No es necesario si .wizard-steps lo tiene */
 }
 
-.modal-header {
+#config-wizard.active {
+    display: flex; /* Mostrar cuando esté activo */
+}
+
+/* El contenido del wizard (anteriormente .modal-content) ahora es directamente #config-wizard */
+/* Así que los estilos de .modal-content se aplican o se adaptan a #config-wizard */
+
+.wizard-header { /* Renombrado de .modal-header */
     display: flex;
     justify-content: space-between;
     align-items: center;
