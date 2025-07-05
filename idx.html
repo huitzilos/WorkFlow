@@ -21,17 +21,14 @@
             </button>
         </div>
 
-        <!-- El .app-content-wrapper, .sidebar, .workspace han sido eliminados -->
-        <!-- El único contenido principal visible será el #initial-config-message o el wizard modal -->
-
-    </div> <!-- Fin div.app -->
-
-    <!-- Wizard Modal -->
-    <div id="config-wizard" class="modal-overlay" style="display: none;">
-        <div class="modal-content" style="max-width: 700px; width: 90%;">
-            <div class="modal-header">
+        <!-- Contenedor del Wizard (ya no es un modal overlay) -->
+        <div id="config-wizard" style="display: none;">
+            <!-- La clase .modal-content ya no es necesaria como wrapper directo si #config-wizard es el contenedor principal con padding, etc. -->
+            <!-- O se puede mantener si #config-wizard es solo un flex container y .wizard-content (renombrado de .modal-content) tiene el bg, shadow, etc. -->
+            <!-- Por simplicidad, #config-wizard ahora tiene los estilos de .modal-overlay y .modal-content combinados -->
+            <div class="wizard-header"> <!-- Renombrado desde modal-header -->
                 <h2>Asistente de Configuración Inicial</h2>
-                <button id="close-wizard-btn" class="modal-close-btn">&times;</button> <!-- Botón para cerrar el wizard -->
+                <button id="close-wizard-btn" class="modal-close-btn">&times;</button>
             </div>
             <div class="wizard-steps">
                 <div class="wizard-step active" data-step="1">
