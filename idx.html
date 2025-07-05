@@ -453,8 +453,195 @@
                     <div id="step3-error-message" class="error-message" style="margin-top:10px;"></div>
                 </div>
                 <div class="wizard-step" data-step="4">
-                    <h3>Paso 4: Configuración Completada</h3>
-                    <!-- Contenido del Paso 4 (Resumen simplificado) irá aquí -->
+                    <h3>Paso 4: Configuración de Workflows Generales</h3>
+                    <p>Defina los flujos de trabajo generales para las operaciones de sus almacenes. Estos flujos se pueden asignar a uno o varios almacenes.</p>
+
+                    <div class="workflow-config-area">
+                        <!-- Sección Flujo de Entrada -->
+                        <div class="workflow-section" id="workflow-entrada">
+                            <h4>Flujo de Documento de Entrada</h4>
+                            <div class="workflow-palette">
+                                <select class="form-input workflow-node-select" data-flow-type="entrada">
+                                    <option value="">Seleccionar acción para añadir...</option>
+                                    {NODE_OPTIONS_ENTRADA}
+                                </select>
+                                <button type="button" class="btn btn-secondary btn-sm add-workflow-node-btn" data-flow-type="entrada">Añadir Acción</button>
+                            </div>
+                            <div class="workflow-blocks-container" data-flow-type="entrada">
+                                <!-- Bloques para flujo de entrada -->
+                            </div>
+                        </div>
+
+                        <!-- Sección Flujo de Almacén -->
+                        <div class="workflow-section" id="workflow-almacen">
+                            <h4>Flujo de Documento de Almacén</h4>
+                            <div class="workflow-palette">
+                                <select class="form-input workflow-node-select" data-flow-type="almacen">
+                                    <option value="">Seleccionar acción para añadir...</option>
+                                    {NODE_OPTIONS_ALMACEN}
+                                </select>
+                                <button type="button" class="btn btn-secondary btn-sm add-workflow-node-btn" data-flow-type="almacen">Añadir Acción</button>
+                            </div>
+                            <div class="workflow-blocks-container" data-flow-type="almacen">
+                                <!-- Bloques para flujo de almacén -->
+                            </div>
+                        </div>
+
+                        <!-- Sección Flujo de Salida -->
+                        <div class="workflow-section" id="workflow-salida">
+                            <h4>Flujo de Documento de Salida</h4>
+                            <div class="workflow-palette">
+                                <select class="form-input workflow-node-select" data-flow-type="salida">
+                                    <option value="">Seleccionar acción para añadir...</option>
+                                    {NODE_OPTIONS_SALIDA}
+                                </select>
+                                <button type="button" class="btn btn-secondary btn-sm add-workflow-node-btn" data-flow-type="salida">Añadir Acción</button>
+                            </div>
+                            <div class="workflow-blocks-container" data-flow-type="salida">
+                                <!-- Bloques para flujo de salida -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="margin: 20px 0;">
+                    <h4>Asignar Workflows a Almacenes</h4>
+                    <div id="warehouse-assignment-container" class="form-group">
+                        <p>Seleccione a qué almacenes se aplicarán estos workflows generales. Un almacén puede tener asignado este conjunto general o un workflow específico (Fase 3).</p>
+                        <!-- Checkboxes de almacenes se cargarán aquí -->
+                    </div>
+                    <div id="step4-error-message" class="error-message"></div>
+                </div>
+                <div class="wizard-step" data-step="5">
+                    <h3>Paso 5: Proveedores, Productos y Workflows Específicos</h3>
+                    <p>Defina proveedores y sus productos. Posteriormente, podrá configurar flujos de trabajo específicos para ellos si es necesario.</p>
+
+                    <div class="content-columns" style="display: flex; gap: 20px;">
+                        <!-- Columna de Proveedores -->
+                        <div class="column" style="flex: 1; border-right: 1px solid #eee; padding-right: 20px;">
+                            <h4>Gestión de Proveedores</h4>
+                            <form id="wizard-provider-form">
+                                <div class="form-group">
+                                    <label for="provider-name">Nombre del Proveedor <span class="required">*</span></label>
+                                    <input type="text" id="provider-name" name="provider-name" class="form-input" required>
+                                    <div class="error-message"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="provider-id">ID del Proveedor (Opcional)</label>
+                                    <input type="text" id="provider-id" name="provider-id" class="form-input">
+                                    <div class="error-message"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="provider-contact-person">Persona de Contacto</label>
+                                    <input type="text" id="provider-contact-person" name="provider-contact-person" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="provider-email">Email de Contacto</label>
+                                    <input type="email" id="provider-email" name="provider-email" class="form-input">
+                                    <div class="error-message"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="provider-phone">Teléfono de Contacto</label>
+                                    <input type="tel" id="provider-phone" name="provider-phone" class="form-input">
+                                    <div class="error-message"></div>
+                                </div>
+                                <button type="button" id="add-provider-btn" class="btn btn-primary">Añadir Proveedor</button>
+                            </form>
+                            <hr style="margin: 20px 0;">
+                            <h5>Proveedores Existentes:</h5>
+                            <ul id="providers-list" class="item-list" style="list-style-type: none; padding-left: 0;">
+                                <!-- Proveedores se listarán aquí -->
+                                <!-- Ejemplo: <li data-provider-id="p1">Proveedor A <button class="btn-link remove-provider-btn">Eliminar</button></li> -->
+                            </ul>
+                        </div>
+
+                        <!-- Columna de Productos y Workflows (inicialmente podría estar oculta o mostrar un placeholder) -->
+                        <div class="column" style="flex: 2;">
+                            <h4 id="selected-provider-area-title">Seleccione un Proveedor</h4>
+                            <div id="provider-specific-content" style="display: none;">
+                                <div id="product-management-section">
+                                    <h5>Gestión de Productos para <span id="product-management-provider-name"></span></h5>
+                                    <form id="wizard-product-form">
+                                        <div class="form-group">
+                                            <label for="product-name">Nombre del Producto <span class="required">*</span></label>
+                                            <input type="text" id="product-name" name="product-name" class="form-input" required>
+                                            <div class="error-message"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="product-sku">SKU/ID del Producto <span class="required">*</span></label>
+                                            <input type="text" id="product-sku" name="product-sku" class="form-input" required>
+                                            <div class="error-message"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="product-description">Descripción</label>
+                                            <textarea id="product-description" name="product-description" class="form-input" rows="2"></textarea>
+                                        </div>
+                                        <button type="button" id="add-product-btn" class="btn btn-secondary btn-sm">Añadir Producto</button>
+                                    </form>
+                                    <hr>
+                                    <h6>Productos del Proveedor:</h6>
+                                    <ul id="products-list-for-provider" class="item-list" style="max-height: 150px;">
+                                        <!-- Productos del proveedor seleccionado se listarán aquí -->
+                                    </ul>
+                                </div>
+                                <hr style="margin: 25px 0;">
+                                <div id="specific-workflow-config-section">
+                                    <h5>Configuración de Workflow Específico para <span id="specific-workflow-target-name">[Proveedor/Producto]</span></h5>
+                                    <p><em>Los bloques heredados del workflow general se muestran con un fondo diferente. Puede añadir acciones específicas para este proveedor/producto.</em></p>
+
+                                    <div class="workflow-config-area" id="specific-workflow-area">
+                                        <!-- Sección Flujo de Entrada Específico -->
+                                        <div class="workflow-section" id="specific-workflow-entrada">
+                                            <h4>Flujo de Entrada Específico</h4>
+                                            <div class="workflow-palette">
+                                                <select class="form-input workflow-node-select specific-select" data-flow-type="entrada-especifico">
+                                                    <option value="">Seleccionar acción para añadir...</option>
+                                                    <!-- Opciones se poblarán con JS -->
+                                                </select>
+                                                <button type="button" class="btn btn-secondary btn-sm add-workflow-node-btn specific-btn" data-flow-type="entrada-especifico">Añadir Acción Específica</button>
+                                            </div>
+                                            <div class="workflow-blocks-container specific-blocks-container" data-flow-type="entrada-especifico" data-general-flow-type="entrada">
+                                                <!-- Bloques heredados y específicos para flujo de entrada -->
+                                            </div>
+                                        </div>
+
+                                        <!-- Sección Flujo de Almacén Específico -->
+                                        <div class="workflow-section" id="specific-workflow-almacen">
+                                            <h4>Flujo de Almacén Específico</h4>
+                                            <div class="workflow-palette">
+                                                <select class="form-input workflow-node-select specific-select" data-flow-type="almacen-especifico">
+                                                    <option value="">Seleccionar acción para añadir...</option>
+                                                </select>
+                                                <button type="button" class="btn btn-secondary btn-sm add-workflow-node-btn specific-btn" data-flow-type="almacen-especifico">Añadir Acción Específica</button>
+                                            </div>
+                                            <div class="workflow-blocks-container specific-blocks-container" data-flow-type="almacen-especifico" data-general-flow-type="almacen">
+                                                <!-- Bloques heredados y específicos para flujo de almacén -->
+                                            </div>
+                                        </div>
+
+                                        <!-- Sección Flujo de Salida Específico -->
+                                        <div class="workflow-section" id="specific-workflow-salida">
+                                            <h4>Flujo de Salida Específico</h4>
+                                            <div class="workflow-palette">
+                                                <select class="form-input workflow-node-select specific-select" data-flow-type="salida-especifico">
+                                                    <option value="">Seleccionar acción para añadir...</option>
+                                                </select>
+                                                <button type="button" class="btn btn-secondary btn-sm add-workflow-node-btn specific-btn" data-flow-type="salida-especifico">Añadir Acción Específica</button>
+                                            </div>
+                                            <div class="workflow-blocks-container specific-blocks-container" data-flow-type="salida-especifico" data-general-flow-type="salida">
+                                                <!-- Bloques heredados y específicos para flujo de salida -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="step5-workflow-error-message" class="error-message" style="margin-top:10px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step5-error-message" class="error-message" style="margin-top:15px;"></div>
+                </div>
+                <div class="wizard-step" data-step="6"> <!-- Anterior Paso 5 ahora es 6 -->
+                    <h3>Paso 6: Configuración Completada</h3>
+                    <!-- Contenido del Paso 6 (Resumen simplificado) irá aquí -->
                     <p>¡Configuración inicial guardada!</p>
                 </div>
             </div>
