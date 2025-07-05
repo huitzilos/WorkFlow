@@ -84,20 +84,67 @@ body {
 /* ===== LAYOUT PRINCIPAL ===== */
 .app {
     display: flex;
+    flex-direction: column; /* Cambiado para permitir el mensaje de config completada arriba */
     height: 100vh;
     background-color: var(--white);
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar {
+/* Contenedor para el mensaje principal cuando el wizard está completo y el workspace oculto */
+.initial-config-message-container {
+    display: none; /* Oculto por defecto, se muestra con JS */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ocupa toda la altura si es el único contenido */
+    text-align: center;
+    padding: var(--space-8);
+}
+
+.initial-config-message-container h2 {
+    font-size: var(--font-2xl);
+    color: var(--primary-blue);
+    margin-bottom: var(--space-4);
+}
+
+.initial-config-message-container p {
+    font-size: var(--font-lg);
+    color: var(--gray-700);
+    margin-bottom: var(--space-6);
+}
+
+
+/* Por defecto, ocultar sidebar y workspace si no se requiere el wizard */
+.sidebar,
+.workspace {
+    display: none;
+}
+
+/* Clase para mostrar los elementos cuando sea necesario (después del wizard) */
+.app-active .sidebar {
     width: 280px;
     background-color: var(--gray-50);
     border-right: 1px solid var(--gray-200);
-    display: flex;
+    display: flex; /* Mostrar cuando .app-active está presente en .app */
     flex-direction: column;
     overflow: hidden;
     z-index: 100;
+    height: 100vh; /* Asegurar que ocupe la altura si .app es flex row */
 }
+
+.app-active .workspace {
+    flex: 1;
+    display: flex; /* Mostrar cuando .app-active está presente en .app */
+    flex-direction: column;
+    background-color: var(--white);
+    position: relative;
+    height: 100vh; /* Asegurar que ocupe la altura si .app es flex row */
+}
+
+/* Si .app es flex direction row y app-active, el contenedor del app debe ser row */
+.app.app-active {
+    flex-direction: row;
+}
+
 
 .sidebar-header {
     padding: var(--space-6);

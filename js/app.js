@@ -33,8 +33,18 @@ class FlowWareApp {
             // Marcar como inicializado
             this.isInitialized = true;
 
-            // Mensaje de bienvenida
-            this.showWelcomeMessage();
+            // Inicializar WizardManager aquí para asegurar que FlowWare.Utils esté listo
+            if (window.WizardManager && typeof WizardManager === 'function') {
+                new WizardManager(); // WizardManager se auto-asigna a window.FlowWare.WizardManager
+            } else {
+                console.error("WizardManager no está definido o no es una función.");
+            }
+
+            // Lógica para mostrar wizard o mensaje de completado
+            this.handleInitialDisplay();
+
+            // Mensaje de bienvenida (quizás no sea necesario si el wizard se muestra)
+            // this.showWelcomeMessage();
 
             console.log('✅ FlowWare inicializado correctamente');
 
@@ -54,14 +64,15 @@ class FlowWareApp {
 
         // Verificar elementos DOM requeridos
         const requiredElements = [
-            'canvas',
-            'connections-svg',
-            'config-panel',
-            'node-name',
-            'node-description',
-            'zoom-level',
-            'node-count',
-            'connection-count'
+            // 'canvas', // Comentado
+            // 'connections-svg', // Comentado
+            // 'config-panel', // Comentado - Panel de config de nodos del canvas
+            // 'node-name', // Comentado
+            // 'node-description', // Comentado
+            // 'zoom-level', // Comentado
+            // 'node-count', // Comentado
+            // 'connection-count' // Comentado
+            // Se podrían añadir elementos del wizard aquí si fueran críticos para FlowWareApp
         ];
 
         const missingElements = requiredElements.filter(id => !document.getElementById(id));
@@ -71,19 +82,21 @@ class FlowWareApp {
     }
 
     async initializeManagers() {
-        // Inicializar Canvas Manager
-        this.managers.canvas = new CanvasManager();
-        await this.waitForManager('canvas');
+        // Inicializar Canvas Manager - Comentado
+        // this.managers.canvas = new CanvasManager();
+        // await this.waitForManager('canvas');
 
-        // Inicializar Node Manager
-        this.managers.nodes = new NodeManager();
-        await this.waitForManager('nodes');
+        // Inicializar Node Manager - Comentado
+        // this.managers.nodes = new NodeManager();
+        // await this.waitForManager('nodes');
 
-        // Inicializar Connection Manager
-        this.managers.connections = new ConnectionManager();
-        await this.waitForManager('connections');
+        // Inicializar Connection Manager - Comentado
+        // this.managers.connections = new ConnectionManager();
+        // await this.waitForManager('connections');
 
-        console.log('📦 Managers inicializados');
+        // Managers como NotificationManager (parte de FlowWare.Utils) y WorkflowManager (si se usa para lógica general)
+        // se inicializan o están disponibles de otra forma. WizardManager se inicializa explícitamente.
+        console.log('📦 Managers del canvas no inicializados (enfocando en wizard).');
     }
 
     async waitForManager(managerName) {
@@ -108,17 +121,21 @@ class FlowWareApp {
         document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
 
         // Eventos personalizados de FlowWare (con verificación)
-        if (window.FlowWare && window.FlowWare.EventBus) {
-            window.FlowWare.EventBus.on(window.FlowWare.EVENTS.NODE_CREATED, this.handleNodeCreated.bind(this));
-            window.FlowWare.EventBus.on(window.FlowWare.EVENTS.CONNECTION_CREATED, this.handleConnectionCreated.bind(this));
-        }
+        // Comentados ya que están relacionados con el canvas
+        // if (window.FlowWare && window.FlowWare.EventBus) {
+        //     window.FlowWare.EventBus.on(window.FlowWare.EVENTS.NODE_CREATED, this.handleNodeCreated.bind(this));
+        //     window.FlowWare.EventBus.on(window.FlowWare.EVENTS.CONNECTION_CREATED, this.handleConnectionCreated.bind(this));
+        // }
 
-        console.log('🔗 Eventos globales configurados');
+        console.log('🔗 Eventos globales configurados (eventos de canvas omitidos intencionalmente).');
     }
 
     setupKeyboardShortcuts() {
-        // Configurar atajos del WorkflowManager
-        WorkflowManager.setupKeyboardShortcuts();
+        // Configurar atajos del WorkflowManager (Guardar/Cargar/Limpiar Workflow del Wizard)
+        // WorkflowManager actualmente guarda/carga el canvas. Habría que adaptarlo o crear
+        // una nueva lógica de guardado/carga para el ESTADO DEL WIZARD si se desea con Ctrl+S/O.
+        // Por ahora, el wizard guarda en cada paso. El WorkflowManager.save() actual no aplica.
+        // WorkflowManager.setupKeyboardShortcuts(); // Comentado por ahora
 
         // Atajos adicionales de la aplicación
         document.addEventListener('keydown', (event) => {
@@ -128,7 +145,8 @@ class FlowWareApp {
             switch (event.key) {
                 case 'F1':
                     event.preventDefault();
-                    this.showHelp();
+                    // this.showHelp(); // El contenido de ayuda actual es sobre el canvas
+                    window.FlowWare.NotificationManager.show("La ayuda contextual aún no está implementada para el wizard.", "info");
                     break;
 
                 case 'F2':
@@ -136,23 +154,23 @@ class FlowWareApp {
                     this.toggleDebugMode();
                     break;
 
-                case 'F':
-                    if (event.ctrlKey || event.metaKey) {
-                        event.preventDefault();
-                        this.fitToNodes();
-                    }
-                    break;
+                // case 'F': // Relacionado con fitToNodes del canvas
+                //     if (event.ctrlKey || event.metaKey) {
+                //         event.preventDefault();
+                //         this.fitToNodes();
+                //     }
+                //     break;
 
-                case '?':
-                    if (event.shiftKey) {
-                        event.preventDefault();
-                        this.showShortcuts();
-                    }
-                    break;
+                // case '?': // Relacionado con atajos del canvas
+                //     if (event.shiftKey) {
+                //         event.preventDefault();
+                //         this.showShortcuts();
+                //     }
+                //     break;
             }
         });
 
-        console.log('⌨️ Atajos de teclado configurados');
+        console.log('⌨️ Atajos de teclado configurados (atajos de canvas omitidos).');
     }
 
     checkAutoSave() {
@@ -201,11 +219,12 @@ class FlowWareApp {
 
     handleResize() {
         // Debounce para evitar múltiples llamadas
-        window.FlowWare.Utils.Performance.debounce(() => {
-            if (this.managers.canvas) {
-                this.managers.canvas.updateTransform();
-            }
-        }, 250)();
+        // window.FlowWare.Utils.Performance.debounce(() => {
+        //     if (this.managers.canvas) { // CanvasManager ya no se inicializa
+        //         // this.managers.canvas.updateTransform();
+        //     }
+        // }, 250)();
+        // No es necesaria acción de resize si el canvas no está visible.
     }
 
     handleVisibilityChange() {
@@ -470,15 +489,50 @@ class FlowWareApp {
 
 // ===== INICIALIZACIÓN =====
 
+    handleInitialDisplay() {
+        const wizardCompleted = window.FlowWare.Utils.State.load('flowWareConfig.wizardCompleted');
+        const initialConfigMessage = document.getElementById('initial-config-message');
+        const appElement = document.querySelector('.app'); // Necesitamos el div .app
+        const appContentWrapper = document.querySelector('.app-content-wrapper');
+
+
+        if (!wizardCompleted) {
+            if (window.FlowWare && window.FlowWare.WizardManager) {
+                window.FlowWare.WizardManager.showWizard();
+            } else {
+                console.error("WizardManager no está disponible para mostrar el wizard automáticamente.");
+            }
+            if (initialConfigMessage) initialConfigMessage.style.display = 'none';
+            if (appContentWrapper) appContentWrapper.style.display = 'none'; // Asegurar que el contenido principal esté oculto
+            if (appElement) appElement.classList.remove('app-active');
+
+        } else {
+            if (initialConfigMessage) {
+                initialConfigMessage.style.display = 'flex';
+            }
+            if (window.FlowWare && window.FlowWare.WizardManager) {
+                 window.FlowWare.WizardManager.hideWizard(); // Asegurar que esté oculto si se completó
+            }
+            if (appContentWrapper) appContentWrapper.style.display = 'none'; // Mantener oculto
+            if (appElement) appElement.classList.remove('app-active');
+
+            // El mensaje de bienvenida original podría ser redundante aquí
+            // this.showWelcomeMessage(); // Ya no se llama desde init() directamente.
+            console.log("Configuración inicial ya completada. Mostrando mensaje.");
+        }
+    }
+}
+
 // Crear instancia global
 window.FlowWareApp = new FlowWareApp();
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     // Pequeña demora para asegurar que todos los scripts se carguen
+    // Esto es especialmente importante para que js/utils.js (con NotificationManager) esté disponible
     setTimeout(() => {
         window.FlowWareApp.init();
-    }, 100);
+    }, 250); // Aumentar un poco el timeout por si acaso
 });
 
 // Exponer para debugging
