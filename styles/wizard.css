@@ -1,0 +1,317 @@
+/* styles/wizard.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050; /* Encima de otros elementos como el panel de config */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+    color: #888;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: #555;
+}
+
+.wizard-steps {
+    flex-grow: 1;
+    overflow-y: auto; /* Para contenido largo en un paso */
+    padding-right: 10px; /* Espacio para scrollbar */
+    margin-bottom: 20px;
+}
+
+.wizard-step {
+    display: none; /* Ocultar todos los pasos por defecto */
+    animation: fadeIn 0.5s ease;
+}
+
+.wizard-step.active {
+    display: block; /* Mostrar solo el paso activo */
+}
+
+.wizard-step h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color-light);
+    padding-bottom: 8px;
+}
+
+.wizard-navigation {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.wizard-navigation .btn {
+    min-width: 100px;
+}
+
+/* Estilos para formularios dentro del wizard */
+.wizard-step .form-group {
+    margin-bottom: 18px;
+}
+
+.wizard-step .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.wizard-step .form-input,
+.wizard-step select.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.2s ease;
+}
+
+.wizard-step .form-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color-lighter);
+}
+
+.wizard-step .form-input.invalid {
+    border-color: #e74c3c; /* Rojo para errores */
+}
+
+.wizard-step .error-message {
+    color: #e74c3c;
+    font-size: 0.85em;
+    margin-top: 4px;
+}
+
+/* Estilos para la configuración de workflows (Paso 4) */
+.workflow-config-area {
+    display: flex;
+    flex-direction: column; /* O row si se prefiere lado a lado con wrapping */
+    gap: 25px;
+}
+
+.workflow-section {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.workflow-section h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--primary-color, #0c2a4f); /* Usar variable si existe */
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.workflow-palette {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.workflow-palette .form-input {
+    flex-grow: 1;
+}
+
+.workflow-blocks-container {
+    min-height: 80px; /* Para que se vea el área aunque esté vacía */
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.workflow-block {
+    background-color: #e9ecef;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    font-size: 0.9em;
+}
+
+.workflow-block:active {
+    cursor: grabbing;
+    background-color: #dde2e6;
+}
+
+.workflow-block .node-icon {
+    margin-right: 8px;
+}
+
+.workflow-block .remove-block-btn {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0 5px;
+}
+.workflow-block .remove-block-btn:hover {
+    color: #e74c3c;
+}
+
+#warehouse-assignment-container .form-group label { /* Para los checkboxes de almacenes */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+}
+#warehouse-assignment-container input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Estilos para el Paso 5: Proveedores y Productos */
+.content-columns {
+    display: flex;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+    /* border-right: 1px solid #eee; */ /* Estilo en línea en HTML para el primer column */
+    /* padding-right: 20px; */
+}
+.column:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.item-list {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: 200px; /* Opcional: para hacerlo scrolleable si hay muchos items */
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.item-list li {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.item-list li:last-child {
+    border-bottom: none;
+}
+
+.item-list li:hover {
+    background-color: #f7f7f7;
+}
+.item-list li.selected {
+    background-color: var(--primary-color-lighter, #cfe2ff);
+    font-weight: 600;
+}
+
+.btn-link { /* Para botones de eliminar en listas */
+    background: none;
+    border: none;
+    color: var(--primary-color, #007bff);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    font-size: 0.9em;
+}
+.btn-link:hover {
+    color: var(--primary-color-dark, #0056b3);
+}
+.btn-link.remove-provider-btn, .btn-link.remove-product-btn { /* Más específico */
+    color: #dc3545;
+}
+.btn-link.remove-provider-btn:hover, .btn-link.remove-product-btn:hover {
+    color: #c82333;
+}
+
+.workflow-block.inherited {
+    background-color: #f0f8ff; /* AliceBlue para diferenciar los heredados */
+    border-style: dashed;
+    /* Podríamos añadir :after content para un pequeño icono de "heredado" */
+}
+
+.workflow-block.inherited .remove-block-btn {
+    /* display: none;  Opcional: ocultar botón de eliminar para bloques heredados */
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos para el botón accent (si no existe en components.css) */
+.btn-accent {
+    background-color: var(--accent-color, #ff9d00); /* Color de acento, fallback naranja */
+    color: white;
+    border: none;
+}
+
+.btn-accent:hover {
+    background-color: var(--accent-color-dark, #e68a00); /* Un poco más oscuro al hacer hover */
+}
