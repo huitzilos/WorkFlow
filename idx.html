@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowWare - Workflows de Almacén</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/components.css">
+    <link rel="stylesheet" href="./styles/nodes.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Sidebar con paleta de nodos -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">
+                    <span class="logo-icon">⚡</span>
+                    FlowWare
+                </h1>
+            </div>
+
+            <div class="node-palette">
+                <!-- Disparadores -->
+                <section class="palette-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">🎯</span>
+                        Disparadores
+                    </h3>
+                    <div class="node-list">
+                        <div class="node-item" data-type="trigger" data-subtype="entrada">
+                            <div class="node-preview trigger">
+                                <span class="node-icon">📦</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Orden de Entrada</div>
+                                <div class="node-desc">Productos que llegan</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="trigger" data-subtype="salida">
+                            <div class="node-preview trigger">
+                                <span class="node-icon">🚛</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Orden de Salida</div>
+                                <div class="node-desc">Productos que salen</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Acciones -->
+                <section class="palette-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">⚙️</span>
+                        Acciones
+                    </h3>
+                    <div class="node-list">
+                        <div class="node-item" data-type="action" data-subtype="recepcion">
+                            <div class="node-preview action">
+                                <span class="node-icon">📥</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Recepción</div>
+                                <div class="node-desc">Recibir productos</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="verificar-stock">
+                            <div class="node-preview action">
+                                <span class="node-icon">📊</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Verificar Stock</div>
+                                <div class="node-desc">Revisar inventario</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="almacenaje">
+                            <div class="node-preview action">
+                                <span class="node-icon">🏪</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Almacenaje</div>
+                                <div class="node-desc">Almacenar productos</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="etiquetar">
+                            <div class="node-preview action">
+                                <span class="node-icon">🏷️</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Generar Etiqueta</div>
+                                <div class="node-desc">Código de barras</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="reabastecer">
+                            <div class="node-preview action">
+                                <span class="node-icon">📈</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Reabastecer</div>
+                                <div class="node-desc">Reponer inventario</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="picking">
+                            <div class="node-preview action">
+                                <span class="node-icon">🔍</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Picking</div>
+                                <div class="node-desc">Recolectar productos</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="packing">
+                            <div class="node-preview action">
+                                <span class="node-icon">📦</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Packing</div>
+                                <div class="node-desc">Empacar productos</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="mover-a">
+                            <div class="node-preview action">
+                                <span class="node-icon">📍</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Mover a</div>
+                                <div class="node-desc">Reubicar productos</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="embarque">
+                            <div class="node-preview action">
+                                <span class="node-icon">🚚</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Embarque</div>
+                                <div class="node-desc">Cargar vehículo</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="action" data-subtype="envio">
+                            <div class="node-preview action">
+                                <span class="node-icon">🚛</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Envío</div>
+                                <div class="node-desc">Despachar productos</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Condiciones -->
+                <section class="palette-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">❓</span>
+                        Condiciones
+                    </h3>
+                    <div class="node-list">
+                        <div class="node-item" data-type="condition" data-subtype="stock-disponible">
+                            <div class="node-preview condition">
+                                <span class="node-icon">📈</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Stock Disponible</div>
+                                <div class="node-desc">Verificar cantidad</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="condition" data-subtype="prioridad">
+                            <div class="node-preview condition">
+                                <span class="node-icon">⭐</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Prioridad Alta</div>
+                                <div class="node-desc">Pedidos urgentes</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="condition" data-subtype="categoria">
+                            <div class="node-preview condition">
+                                <span class="node-icon">🏷️</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Por Categoría</div>
+                                <div class="node-desc">Filtrar por tipo</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="condition" data-subtype="ubicacion">
+                            <div class="node-preview condition">
+                                <span class="node-icon">📍</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Por Ubicación</div>
+                                <div class="node-desc">Verificar zona</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notificaciones -->
+                <section class="palette-section">
+                    <h3 class="section-title">
+                        <span class="section-icon">📢</span>
+                        Notificaciones
+                    </h3>
+                    <div class="node-list">
+                        <div class="node-item" data-type="notification" data-subtype="email">
+                            <div class="node-preview notification">
+                                <span class="node-icon">📧</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Enviar Email</div>
+                                <div class="node-desc">Notificación por correo</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="notification" data-subtype="sistema">
+                            <div class="node-preview notification">
+                                <span class="node-icon">🔔</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Alerta Sistema</div>
+                                <div class="node-desc">Notificación interna</div>
+                            </div>
+                        </div>
+
+                        <div class="node-item" data-type="notification" data-subtype="sms">
+                            <div class="node-preview notification">
+                                <span class="node-icon">📱</span>
+                            </div>
+                            <div class="node-info">
+                                <div class="node-name">Enviar SMS</div>
+                                <div class="node-desc">Mensaje de texto</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </aside>
+
+        <!-- Canvas principal -->
+        <main class="workspace">
+            <header class="workspace-header">
+                <div class="header-content">
+                    <div class="header-info">
+                        <h2 class="workspace-title">Workflow de Almacén</h2>
+                        <p class="workspace-subtitle">Diseña flujos automatizados</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="WorkflowManager.loadTemplate('recepcion-completa')">
+                            <span>📥</span> Demo Entrada
+                        </button>
+                        <button class="btn btn-secondary" onclick="WorkflowManager.loadTemplate('salida-simple')">
+                            <span>🚛</span> Demo Salida Simple
+                        </button>
+                        <button class="btn btn-secondary" onclick="WorkflowManager.loadTemplate('salida-completa')">
+                            <span>📦</span> Demo Salida Completa
+                        </button>
+                        <button class="btn btn-secondary" onclick="WorkflowManager.load()">
+                            <span>📂</span> Cargar
+                        </button>
+                        <button class="btn btn-secondary" onclick="WorkflowManager.clear()">
+                            <span>🗑️</span> Limpiar
+                        </button>
+                        <button class="btn btn-primary" onclick="WorkflowManager.save()">
+                            <span>💾</span> Guardar
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="canvas-container">
+                <div id="canvas" class="canvas">
+                    <svg class="connections-layer" id="connections-svg">
+                        <!-- Conexiones se renderizan aquí -->
+                    </svg>
+
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-icon">🎯</div>
+                        <h3>Comienza tu workflow</h3>
+                        <p>Arrastra nodos desde el panel lateral</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="workspace-footer">
+                <div class="footer-stats">
+                    <span id="node-count">0 nodos</span>
+                    <span id="connection-count">0 conexiones</span>
+                    <span>Zoom: <span id="zoom-level">100%</span></span>
+                </div>
+                <div class="zoom-controls">
+                    <button class="zoom-btn" onclick="canvasManager.zoomOut()" title="Alejar">−</button>
+                    <button class="zoom-btn" onclick="canvasManager.resetZoom()" title="Restablecer">⌂</button>
+                    <button class="zoom-btn" onclick="canvasManager.zoomIn()" title="Acercar">+</button>
+                </div>
+            </footer>
+        </main>
+
+        <!-- Panel de configuración -->
+        <aside class="config-panel" id="config-panel">
+            <div class="config-header">
+                <h3>Configuración</h3>
+                <button class="config-close" onclick="window.FlowWare.State.nodes.deselectNode()">×</button>
+            </div>
+            <div class="config-content">
+                <div class="form-group">
+                    <label>Nombre del nodo</label>
+                    <input type="text" id="node-name" class="form-input" placeholder="Ingresa un nombre">
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="node-description" class="form-input" rows="3"
+                        placeholder="Describe la función"></textarea>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Scripts modulares -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script src="./js/config.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/canvas-manager.js"></script>
+    <script src="./js/node-manager.js"></script>
+    <script src="./js/connection-manager.js"></script>
+    <script src="./js/workflow-manager.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
